@@ -1,0 +1,34 @@
+{
+  "version": "5",
+  "dialect": "pg",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1698254486125,
+      "tag": "0000_useful_smiling_tiger",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1699804825437,
+      "tag": "0001_living_micromax",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1699809134326,
+      "tag": "0002_known_darwin",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1699822417125,
+      "tag": "0003_high_scream",
+      "breakpoints": true
+    }
+  ]
+}

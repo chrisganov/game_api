@@ -7,4 +7,6 @@ const CONNECTION_STRING = ENV.connectionString;
 
 const queryClient = postgres(CONNECTION_STRING);
 
-export const db = drizzle(queryClient, { schema });
+export const db = drizzle(queryClient, {
+  schema,
+});

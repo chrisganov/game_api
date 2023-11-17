@@ -14,11 +14,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // TODO: Update pino better
+// 
 app.use(pino());
 
 app.use(router);
-
-// TODO: Error handling
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console

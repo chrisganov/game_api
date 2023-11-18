@@ -1,4 +1,3 @@
-import { desc, eq } from "drizzle-orm";
 import { users } from "../db/schema";
 import { InsertUser } from "./users.validators";
 import { db } from "../db";
@@ -6,7 +5,7 @@ import { db } from "../db";
 // TODO
 const getAllPublic = async () => {
   const allUsers = await db.query.users.findMany({
-    orderBy: [desc(users.createdAt)],
+    orderBy: (users, { desc }) => [desc(users.createdAt)],
     with: {
       scores: true,
     },
@@ -19,11 +18,22 @@ const getAllPublic = async () => {
   return allUsers;
 };
 
-const createPublic = async (newUser: InsertUser) => {
-  const [{ id: createdId }] = await db.insert(users).values(newUser).returning({ id: users.id });
+const getByEmail = async (email: string) => {
+  const user = await db.query.users.findFirst({
+    where: (users, { eq }) => eq(users.email, email),
+  });
+
+  return user;
+};
+
+const createPublic = async ({ password, ...rest }: InsertUser) => {
+  const [{ id: createdId }] = await db
+    .insert(users)
+    .values({ ...rest, passhash: password })
+    .returning({ id: users.id });
 
   const addedUser = await db.query.users.findFirst({
-    where: eq(users.id, createdId),
+    where: (users, { eq }) => eq(users.id, createdId),
     with: {
       scores: true,
     },
@@ -35,4 +45,5 @@ const createPublic = async (newUser: InsertUser) => {
 export const userRepo = {
   getAllPublic,
   createPublic,
+  getByEmail,
 };

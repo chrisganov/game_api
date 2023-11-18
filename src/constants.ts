@@ -1,4 +1,5 @@
 export const USERNAME_REGEX = /^[a-zA-Z0-9\-_]+$/;
+export const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
 export const HTTP_STATUS = {
   ok: 200,
@@ -14,6 +15,7 @@ export const ERROR_MESSAGE = {
     invalidRequest: "INVALID_REQUEST",
   },
   user: {
+    alreadyExist: "USER_EMAIL_ALREADY_USED",
     notFound: "USER_NOT_FOUND",
   },
 } as const;

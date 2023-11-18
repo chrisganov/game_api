@@ -2,6 +2,7 @@ import { ERROR_MESSAGE } from "../constants";
 import { CustomError } from "../lib/error";
 import { userRepo } from "./users.repository";
 import { InsertUser, multipleUsersValidation, userValidation } from "./users.validators";
+import { hash } from "argon2";
 
 export const getAllUsersService = async () => {
   const users = await userRepo.getAllPublic();
@@ -20,7 +21,19 @@ export const getAllUsersService = async () => {
 };
 
 export const createUserService = async (newUser: InsertUser) => {
-  const addedUser = await userRepo.createPublic(newUser);
+  const existingUser = await userRepo.getByEmail(newUser.email);
+
+  if (existingUser) {
+    throw new CustomError({
+      message: `user with ${newUser.email} already exists`,
+      status: "badRequest",
+      errorMessage: ERROR_MESSAGE.user.alreadyExist,
+    });
+  }
+
+  const password = await hash(newUser.password);
+
+  const addedUser = await userRepo.createPublic({ ...newUser, password });
 
   const validUsers = userValidation.safeParse(addedUser);
 

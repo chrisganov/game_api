@@ -29,6 +29,13 @@
       "when": 1699822417125,
       "tag": "0003_high_scream",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1700255759818,
+      "tag": "0004_curious_squirrel_girl",
+      "breakpoints": true
     }
   ]
 }

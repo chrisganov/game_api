@@ -18,6 +18,7 @@ export const users = pgTable("users", {
   ...basedEntityBuilder,
   username: varchar("username", { length: 20 }).unique().notNull(),
   email: text("email").notNull(),
+  passhash: varchar("passhash").notNull(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({

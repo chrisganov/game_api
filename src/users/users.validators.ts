@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { scoreValidator } from "../scores/scores.validators";
-import { USERNAME_REGEX } from "../constants";
+import { PASSWORD_REGEX, USERNAME_REGEX } from "../constants";
 
 export const userValidation = z.object({
   id: z.number(),
@@ -13,6 +13,7 @@ export const multipleUsersValidation = z.array(userValidation);
 export const userInsertValidation = z.object({
   username: z.string().trim().regex(USERNAME_REGEX),
   email: z.string().trim().min(1, "Email needs to exist").email("Not a valid email"),
+  password: z.string().regex(PASSWORD_REGEX, "Invalid password"),
 });
 
 export type User = z.infer<typeof userValidation>;

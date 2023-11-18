@@ -14,9 +14,10 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // TODO: Update pino better
-// 
 app.use(pino());
 
+// TODO: add jsonwebtoken to create a token for authentication. Verify it using middleware to get the user.
+// TODO: figure out a way to refresh the tokens (search)
 app.use(router);
 
 app.listen(port, () => {

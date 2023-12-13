@@ -16,6 +16,9 @@ export const userInsertValidation = z.object({
   password: z.string().regex(PASSWORD_REGEX, "Invalid password"),
 });
 
+export const userLoginValidation = userInsertValidation.pick({ username: true, password: true });
+
 export type User = z.infer<typeof userValidation>;
 export type Users = z.infer<typeof multipleUsersValidation>;
 export type InsertUser = z.infer<typeof userInsertValidation>;
+export type UserLogin = z.infer<typeof userLoginValidation>;

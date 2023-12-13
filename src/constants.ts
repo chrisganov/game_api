@@ -13,6 +13,7 @@ export const HTTP_STATUS = {
 export const ERROR_MESSAGE = {
   general: {
     invalidRequest: "INVALID_REQUEST",
+    unauthorized: "INVALID_USER",
   },
   user: {
     alreadyExist: "USER_EMAIL_ALREADY_USED",

@@ -1,10 +1,14 @@
-import { users } from "../db/schema";
+import { usersTable } from "../db/schema";
 import { InsertUser } from "./users.validators";
 import { db } from "../db";
+import { InferSelectModel } from "drizzle-orm";
 
-// TODO
+type UserInferSelect = InferSelectModel<typeof usersTable>;
+type UserSelect = Partial<Record<keyof UserInferSelect, boolean>>;
+
+// TODO:
 const getAllPublic = async () => {
-  const allUsers = await db.query.users.findMany({
+  const allUsers = await db.query.usersTable.findMany({
     orderBy: (users, { desc }) => [desc(users.createdAt)],
     with: {
       scores: true,
@@ -19,7 +23,7 @@ const getAllPublic = async () => {
 };
 
 const getByEmail = async (email: string) => {
-  const user = await db.query.users.findFirst({
+  const user = await db.query.usersTable.findFirst({
     where: (users, { eq }) => eq(users.email, email),
   });
 
@@ -28,11 +32,11 @@ const getByEmail = async (email: string) => {
 
 const createPublic = async ({ password, ...rest }: InsertUser) => {
   const [{ id: createdId }] = await db
-    .insert(users)
+    .insert(usersTable)
     .values({ ...rest, passhash: password })
-    .returning({ id: users.id });
+    .returning({ id: usersTable.id });
 
-  const addedUser = await db.query.users.findFirst({
+  const addedUser = await db.query.usersTable.findFirst({
     where: (users, { eq }) => eq(users.id, createdId),
     with: {
       scores: true,
@@ -42,8 +46,20 @@ const createPublic = async ({ password, ...rest }: InsertUser) => {
   return addedUser;
 };
 
+const getById = async (id: number) => {
+  const user = await db.query.usersTable.findFirst({
+    where: (users, { eq }) => eq(users.id, id),
+    with: {
+      scores: true,
+    },
+  });
+
+  return user;
+};
+
 export const userRepo = {
   getAllPublic,
+  getById,
   createPublic,
   getByEmail,
 };

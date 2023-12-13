@@ -14,30 +14,30 @@ const basedEntityBuilder = {
   updatedAt: timestamp("updated_at", { mode: "string" }).defaultNow().notNull(),
 };
 
-export const users = pgTable("users", {
+export const usersTable = pgTable("users", {
   ...basedEntityBuilder,
   username: varchar("username", { length: 20 }).unique().notNull(),
   email: text("email").notNull(),
   passhash: varchar("passhash").notNull(),
 });
 
-export const usersRelations = relations(users, ({ many }) => ({
-  scores: many(scores),
+export const usersRelations = relations(usersTable, ({ many }) => ({
+  scores: many(scoresTable),
 }));
 
-export const scores = pgTable("scores", {
+export const scoresTable = pgTable("scores", {
   ...basedEntityBuilder,
   moves: numeric("moves").notNull(),
   time: numeric("time").notNull(),
   level: levelEnum("level").notNull(),
   userId: integer("user_id")
     .notNull()
-    .references(() => users.id),
+    .references(() => usersTable.id),
 });
 
-export const scoresRelations = relations(scores, ({ one }) => ({
-  user: one(users, {
-    fields: [scores.userId],
-    references: [users.id],
+export const scoresRelations = relations(scoresTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [scoresTable.userId],
+    references: [usersTable.id],
   }),
 }));

@@ -1,16 +1,37 @@
 import { Router, Response, Request } from "express";
-import { createUserService, getAllUsersService } from "./users.service";
-import { InsertUser, Users, userInsertValidation } from "./users.validators";
+import { createUserService, getAllUsersService, loginUserService } from "./users.service";
+import { InsertUser, Users, userInsertValidation, userLoginValidation } from "./users.validators";
 import { ERROR_MESSAGE, HTTP_STATUS } from "../constants";
 import { CustomError, formatAndSendError } from "../lib/error";
+import { authMiddleware } from "../middlewares/auth";
 
 const userRouter = Router();
 
-userRouter.get("/", async (req, res: Response<Users>) => {
+userRouter.get("/", authMiddleware, async (req: Request, res: Response<Users>) => {
   try {
     const users = await getAllUsersService();
 
     return res.status(HTTP_STATUS.ok).send(users);
+  } catch (e) {
+    return formatAndSendError(e, req, res);
+  }
+});
+
+userRouter.post("/login", async (req: Request<{ username: string; password: string }>, res: Response) => {
+  try {
+    const validRequestData = userLoginValidation.safeParse(req.body);
+
+    if (!validRequestData.success) {
+      throw new CustomError({
+        message: "Invalid request body",
+        status: "unauthorized",
+        errorMessage: ERROR_MESSAGE.general.unauthorized,
+      });
+    }
+
+    const loginToken = await loginUserService(validRequestData.data);
+
+    res.status(200).send(loginToken);
   } catch (e) {
     return formatAndSendError(e, req, res);
   }

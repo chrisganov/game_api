@@ -2,9 +2,9 @@ import { migrate } from "drizzle-orm/node-postgres/migrator";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
 
-import "@envConfig";
+import { ENV } from "@envConfig";
 
-const migrationClient = postgres(process.env.DB_CONNECTION_STRING, { max: 1 });
+const migrationClient = postgres(ENV.dbConnectionString, { max: 1 });
 
 migrate(drizzle(migrationClient), { migrationsFolder: "./src/db/migrations" })
   .then(() => {

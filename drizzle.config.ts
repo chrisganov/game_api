@@ -1,16 +1,16 @@
 import type { Config } from "drizzle-kit";
-import "@envConfig";
+import { ENV } from "@envConfig";
 
 export default {
   schema: "./src/db/schema.ts",
   out: "./src/db/migrations",
   driver: "pg",
   dbCredentials: {
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    port: Number(process.env.PORT),
+    password: ENV.dbPassword,
+    database: ENV.dbName,
+    user: ENV.dbUser,
+    host: ENV.dbHost,
+    port: Number(ENV.dbPort),
   },
   strict: true,
   verbose: true,

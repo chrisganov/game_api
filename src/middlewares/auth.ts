@@ -45,7 +45,7 @@ export const authMiddleware = async (request: Request, response: Response, next:
         }
 
         response.locals = {
-          userId: tokenData.userId,
+          user: existingUser,
         };
 
         next();

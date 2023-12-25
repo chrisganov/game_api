@@ -5,6 +5,7 @@ import { userRepo } from "./users.repository";
 import { InsertUser, UserLogin, multipleUsersValidation, userValidation } from "./users.validators";
 import { hash, verify } from "argon2";
 import { ENV } from "../lib/env";
+import { z } from "zod";
 
 export const getAllUsersService = async () => {
   const users = await userRepo.getAllPublic();
@@ -12,6 +13,8 @@ export const getAllUsersService = async () => {
   const validUsers = multipleUsersValidation.safeParse(users);
 
   if (!validUsers.success) {
+    const error = validUsers.error;
+    debugger;
     throw new CustomError({
       message: "Create db user validation failed",
       status: "badRequest",
@@ -67,11 +70,11 @@ export const getUserByIdService = async (id: number) => {
 };
 
 export const loginUserService = async (login: UserLogin) => {
-  const user = await userRepo.getByEmail(login.email);
+  const user = await userRepo.getByEmail(login.username);
 
   if (!user) {
     throw new CustomError({
-      message: `User with ${login.email} does not exist`,
+      message: `User with ${login.username} does not exist`,
       status: "unauthorized",
       errorMessage: ERROR_MESSAGE.general.unauthorized,
     });

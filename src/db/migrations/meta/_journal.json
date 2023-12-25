@@ -36,6 +36,20 @@
       "when": 1700255759818,
       "tag": "0004_curious_squirrel_girl",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1702491021178,
+      "tag": "0005_high_apocalypse",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1702496716972,
+      "tag": "0006_dashing_khan",
+      "breakpoints": true
     }
   ]
 }

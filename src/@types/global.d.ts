@@ -7,7 +7,6 @@ export declare global {
       DB_USER: string;
       DB_HOST: string;
       DB_PORT: string;
-      DB_CONNECTION_STRING: string;
       SECRET_TOKEN: string;
       JSON_TOKEN: string;
       NODE_ENV: "development" | "production";

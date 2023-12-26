@@ -12,7 +12,7 @@ export const ENV = {
   dbUser: process.env.DB_USER,
   dbPassword: process.env.DB_PASSWORD,
   dbHost: process.env.DB_HOST,
-  dbConnectionString: process.env.DB_CONNECTION_STRING!,
+  dbConnectionString: process.env.DB_CONNECTION_STRING,
   secretToken: process.env.SECRET_TOKEN,
   jsonToken: process.env.JSON_TOKEN,
 };

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx tsc",
-    "start": "node ./dist/src/index.js",
+    "start": "node -r ts-node/register/transpile-only -r tsconfig-paths/register ./dist/src/index.js",
     "dev": "nodemon --delay 500ms | pino-pretty",
     "introspect": "drizzle-kit introspect:pg --config=drizzle.config.ts",
     "migration:generate": "drizzle-kit generate:pg --config=drizzle.config.ts",

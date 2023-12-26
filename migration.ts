@@ -4,7 +4,8 @@ import postgres from "postgres";
 
 import { ENV } from "@envConfig";
 
-console.log(ENV.dbConnectionString);
+console.log("mine", ENV);
+console.log("global", process.env);
 
 const migrationClient = postgres(ENV.dbConnectionString, { max: 1 });
 
